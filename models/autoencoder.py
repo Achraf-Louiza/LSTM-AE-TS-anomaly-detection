@@ -17,7 +17,7 @@ class Autoencoder:
         decoder_model : tensorflow.keras.models.Model
             The decoder model to use for decoding latent variables into output sequences.
         """
-        inputs = encoder_model.input
+        inputs = encoder_model.inputs
         latent = encoder_model(inputs)
         outputs = decoder_model(latent)
         self.model = Model(inputs, outputs, name='Autoencoder-Model')
