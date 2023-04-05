@@ -45,3 +45,38 @@ def plot_cycle(df, col_anomaly='isAnomaly', col_x='value'):
 
     # Show the plot
     plt.show()
+
+
+def plot_windowed_cycle(df, W, gap=4):
+    """
+    Plot first cycle and its overlapping windowed version.
+
+    Parameters
+    ----------
+    df : numpy.array
+        Dataframe containing the original cycles.
+    W : numpy.array
+        Dataframe containing the windowed data.
+    gap : int, optional
+        Number of timestamp to jump when windowing a cycle, by default 4.
+    """
+    # Original cycle length
+    length_sequence = df.shape[1]
+    
+    # Windowed data shape
+    length_sub_sequence = W.shape[1]
+    n_sub_sequence = (length_sequence-length_sub_sequence) // gap + 1
+    
+    # Create subplots
+    fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(15, 5))
+    
+    # Plot the first subplot (normal cycle)
+    for i in range(n_sub_sequence):
+        axs[1].plot(range(i*length_sub_sequence, (i+1)*length_sub_sequence), W[:n_sub_sequence][i, :, 0])
+    axs[1].set_title('Overlapped due to windowing cycle')
+    
+    # Plot the second subplot (cycle with anomaly)
+    axs[0].plot(df[0, :, 0])
+    axs[0].set_title('Original cycle')
+
+    plt.show()
