@@ -7,6 +7,17 @@ Auto-encoders are neural networks that aim to reconstruct their input data, whic
 ## Dataset
 The "Wafer" dataset used in this project was formatted by Robert Olszewski as part of his doctoral thesis. It contains online process control measurements recorded by various sensors during the processing of silicon wafers for semiconductor manufacturing. The dataset contains both normal and abnormal process samples. There is a significant class imbalance, with abnormal samples representing 10.7% of the training set and 12.1% of the test set. The variables recorded by the sensors are not explicitly labeled and are likely a combination of multiple variables.
 
+## Getting Started
+To use this repository, you'll need to have the following prerequisites installed:
+
+- Python 3  
+- NumPy  
+- TensorFlow  
+
+You can install the dependencies using pip:
+
+          pip install -r requirements.txt
+          
 ## References
 - Olszewski, R. T. "Generalized feature extraction for structural pattern recognition in time-series data". No. CMU-CS-01-108. Carnegie Mellon University, School of Computer Science, 2001. [URL](https://dl.acm.org/citation.cfm?id=935627)  
 - Malhotra, P., Vig, L., Shroff, G., & Agarwal, P. (2016). LSTM-based encoder-decoder for multi-sensor anomaly detection. arXiv preprint arXiv:1607.00148.
