@@ -53,7 +53,7 @@ class DataProcessor:
         # Group the scaled testing data by the specified id column and convert to a list of numpy arrays
         self.s_test = np.stack(self.s_test.groupby([self.id]).apply(lambda A: A[self.col_names].to_numpy()))
         
-    def windowing(self, length_sub_sequence = 10, gap=4):
+    def windowing(self, length_sub_sequence = 12, gap=4):
         """
         Splits the time series data into subsequences with overlapping windows.
 
