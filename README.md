@@ -31,7 +31,7 @@ By applying the auto-encoder on the training set, we obtain a windowed reconstru
 </p> 
 
 ## Anomaly detection
-To identifies anomalies, we will calculate the MAE per cycle using the reconstructed cycles. In principles, the model will struggle at reconstructing anomalies at least slightly more than with normal cycles since they are less familiar with them.
+To identifies anomalies, we will calculate the MAE per cycle using the reconstructed cycles. In principles, the model will struggle at reconstructing anomalies at least slightly more than with normal cycles since he is less familiar with them.
 <p align="center">
 <img src="images/reconstruction_error.png">
 </p> 
