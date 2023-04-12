@@ -30,7 +30,7 @@ def reconstruct_cycles(W, length, sub_length=12, gap=4):
         S = W[i:i+n_sub_sequences, :, :]
         cycle = S[0, :gap, :]  # Initialize the first part of the cycle with the first sub-sequence
         for j in range(1, n_sub_sequences-1):
-            cycle = np.concatenate([cycle, S[j, :gap, :]], axis=0)  # Concatenate the remaining sub-sequences to the cycle
+            cycle = np.concatenate([cycle, np.mean(np.stack([S[k, (j-k)*gap:(j-k+1)*gap, :] for k in range(j-1, j+1)], axis=0), axis=0)], axis=0)  # Average over present cycles in each overlapping gap
         cycle = np.concatenate([cycle, S[n_sub_sequences-1, :, :]], axis=0)  # Add the final sub-sequence to the cycle
         cycles.append(cycle)  # Add the reconstructed cycle to the list of cycles
     cycles = np.stack(cycles, axis=0)  # Stack the list of cycles into a 3D numpy array
