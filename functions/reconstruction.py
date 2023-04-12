@@ -35,3 +35,23 @@ def reconstruct_cycles(W, length, sub_length=12, gap=4):
         cycles.append(cycle)  # Add the reconstructed cycle to the list of cycles
     cycles = np.stack(cycles, axis=0)  # Stack the list of cycles into a 3D numpy array
     return cycles  # Return the reconstructed cycles
+
+def calc_avg_mae_per_cycle(original, reconstruction):
+    """
+    Calculate the average mean absolute error (MAE) per cycle between a set of
+    original 3D sequences and their reconstructions.
+
+    Parameters
+    ----------
+    original : array_like
+        A 3D array of original sequences with shape (num_seqs, seq_len, num_features).
+    reconstruction : array_like
+        A 3D array of reconstructed sequences with shape (num_seqs, seq_len, num_features).
+
+    Returns
+    -------
+    mae_per_cycle : ndarray
+        A 1D array of average MAE per cycle with length equal to seq_len.
+    """
+    mae_per_cycle = np.mean(np.abs(original - reconstruction), axis=(1, 2))
+    return mae_per_cycle
