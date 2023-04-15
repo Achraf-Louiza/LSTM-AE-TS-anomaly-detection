@@ -22,7 +22,8 @@ class Encoder:
             The size of the latent space (i.e., the dimensionality of the encoded representation).
         """
         inputs = Input(shape=(length_sequence, n_features))
-        x = LSTM(32)(inputs)
+        x = LSTM(32, return_sequences=True)(inputs)
+        x = LSTM(32)(x)
         output = Dense(n_latent)(x)
         self.model = Model(inputs, output, name='Encoder-Model')
         

@@ -24,5 +24,6 @@ class Decoder:
         latent_inputs = Input(shape=(n_latent,))
         x = RepeatVector(length_sequence)(latent_inputs)
         x = LSTM(32, return_sequences=True)(x)
+        x = LSTM(32, return_sequences=True)(x)
         output = TimeDistributed(Dense(n_features))(x)
         self.model = Model(latent_inputs, output, name='Decoder-Model')
