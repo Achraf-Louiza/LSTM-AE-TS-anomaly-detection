@@ -4,6 +4,13 @@ This project is aimed at implementing an LSTM-based auto-encoder for anomaly det
 ## Auto-Encoders
 Auto-encoders are neural networks that aim to reconstruct their input data, which are often images or sequences. They consist of two main parts: an encoder, which maps the input data to a lower-dimensional latent space representation, and a decoder, which maps the latent space representation back to the input data. During training, the network is trained to minimize the reconstruction error between the input data and the reconstructed data, often using mean squared error (MSE) as the loss function. Once the network is trained, it can be used to reconstruct new data, and the reconstruction error can be used as a measure of anomaly score.
 
+In this project, I have utilized three different types of auto-encoder architectures, each with their own unique approach to data analysis:
+- **LSTM-AE with overlapped windowing**: Used to analyze time-series data with overlapping windows, providing a more accurate representation of the underlying patterns.
+- **LSTM-AE directly on the multivariate cycles**: Provides a more comprehensive understanding of the data in terms of cycles.
+- **Deep convolutional auto-encode*r: Used to learn features directly from raw data using convolutional layers, providing a more efficient and accurate way of encoding the data.  
+  
+Each of these architecture have been applied on an independent jupyter notebook with good results for LSTM applied directly on multivariate cycles while having almost perfect results with convolutions. (See metrics below)
+
 ## Dataset
 The "Wafer" dataset used in this project was formatted by Robert Olszewski as part of his doctoral thesis. It contains online process control measurements recorded by various sensors during the processing of silicon wafers for semiconductor manufacturing. The dataset contains both normal and abnormal process samples. There is a significant class imbalance, with abnormal samples representing 10.7% of the training set and 12.1% of the test set. The variables recorded by the sensors are not explicitly labeled and are likely a combination of multiple variables.
 
@@ -25,7 +32,7 @@ In order to boost the encoding of temporal dependency, a good practice in LSTM d
 </p> 
 
 ## Reconstructed cycle
-By applying the auto-encoder on the training set, we obtain a windowed reconstruction with overlaps. In order to get rid of the overlap by keeping maximum information, I have applied an average over every overlap and obtained the below reconstruction.
+By training an LSTM auto-encoder with windowing on the training set, we obtain a windowed reconstruction with overlaps. In order to get rid of the overlap by keeping maximum information, I have applied an average over every overlap and obtained the below reconstruction.
 <p align="center">
 <img src="images/reconstruction.png">
 </p> 
@@ -34,6 +41,11 @@ By applying the auto-encoder on the training set, we obtain a windowed reconstru
 To identifies anomalies, we will calculate the MAE per cycle using the reconstructed cycles. In principles, the model will struggle at reconstructing anomalies at least slightly more than with normal cycles since he is less familiar with them.
 <p align="center">
 <img src="images/reconstruction_error.png">
+</p> 
+
+# Evaluation metrics on test set
+<p align="center">
+<img src="images/evaluation_on_test.PNG">
 </p> 
 
 ## Getting Started
