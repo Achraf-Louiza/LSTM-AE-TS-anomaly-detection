@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tensorflow.keras.layers import Input, LSTM, Dense, RepeatVector, TimeDistributed, Conv1DTranspose, Reshape, BatchNormalization, Dropout
+from tensorflow.keras.layers import Input, LSTM, Dense, RepeatVector, TimeDistributed, Conv1DTranspose, Reshape, BatchNormalization, Dropout, UpSampling1D
 from tensorflow.keras.models import Model
 
 
@@ -52,18 +52,19 @@ class ConvDecoder:
         """
         latent_inputs = Input(shape=(n_latent,))
         
-        x = Dense(length_sequence * n_features)(latent_inputs)
-        x = Reshape((length_sequence, n_features))(x)
+        x = Dense(int(length_sequence/8) * n_features)(latent_inputs)
+        x = Reshape((int(length_sequence/8), n_features))(x)
         
-        x = Conv1DTranspose(filters=32, kernel_size=8, activation='relu', padding='same')(x)
-        x = Conv1DTranspose(filters=32, kernel_size=8, activation='relu', padding='same')(x)
+        x = Conv1DTranspose(filters=128, kernel_size=5, activation='relu', strides=2, padding='same')(x)
+        x = Conv1DTranspose(filters=128, kernel_size=5, activation='relu', strides=2, padding='same')(x)
         x = Dropout(0.1)(x)
         x = BatchNormalization()(x)
         
-        x = Conv1DTranspose(filters=32, kernel_size=5, activation='relu', padding='same')(x)
-        x = Conv1DTranspose(filters=32, kernel_size=5, activation='relu', padding='same')(x)
+        x = Conv1DTranspose(filters=64, kernel_size=7, activation='relu', padding='same', strides=2)(x)
+        x = Conv1DTranspose(filters=64, kernel_size=7, activation='relu', padding='same', strides=1)(x)
         x = Dropout(0.1)(x)
         x = BatchNormalization()(x)
         
-        output = Conv1DTranspose(filters=1, kernel_size=5, activation='relu', padding='same')(x)
+        output = Conv1DTranspose(filters=1, kernel_size=3, activation='relu', padding='same', strides=1)(x)
+        
         self.model = Model(latent_inputs, output, name='Decoder-Model')

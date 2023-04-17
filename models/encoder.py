@@ -1,7 +1,7 @@
-import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras.layers import Input, LSTM, Dense, RepeatVector, TimeDistributed, Conv1D, GlobalMaxPooling1D, BatchNormalization, Dropout
-from tensorflow.keras.models import Model
+from keras.layers import Input, Conv1D, Dropout, BatchNormalization, GlobalAveragePooling1D, Dense, Reshape, Add, LSTM
+from keras.models import Model
+from keras.optimizers import Adam
+from keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
 class LSTMEncoder:
     """
@@ -29,7 +29,7 @@ class LSTMEncoder:
         x = BatchNormalization()(x)
         output = Dense(n_latent)(x)
         self.model = Model(inputs, output, name='Encoder-Model')
-        
+
 class ConvEncoder:
     """
     Encoder class that creates a Conv1D neural network model to encode input sequences into a fixed-length representation
@@ -50,15 +50,17 @@ class ConvEncoder:
         """
         inputs = Input(shape=(length_sequence, n_features))
         
-        x = Conv1D(filters=32, kernel_size=5, activation='relu', padding='same')(inputs)
-        x = Conv1D(filters=32, kernel_size=5, activation='relu', padding='same')(inputs)
+        x = Conv1D(filters=64, kernel_size=7, activation='relu', padding='same', strides=2)(inputs)
+        x = Conv1D(filters=64, kernel_size=7, activation='relu', padding='same', strides=2)(x)
         x = Dropout(0.1)(x)
         x = BatchNormalization()(x)
         
-        x = Conv1D(filters=32, kernel_size=8, activation='relu', padding='same')(inputs)
-        x = Conv1D(filters=32, kernel_size=8, activation='relu', padding='same')(inputs)
+        x = Conv1D(filters=128, kernel_size=5, activation='relu', strides=2, padding='same')(x)
+        x = Conv1D(filters=128, kernel_size=5, activation='relu', strides=2, padding='same')(x)
         x = Dropout(0.1)(x)
         x = BatchNormalization()(x)
+        
+        x = GlobalAveragePooling1D()(x)
         
         output = Dense(n_latent)(x)
         
