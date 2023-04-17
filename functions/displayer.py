@@ -100,7 +100,7 @@ def plot_reconstruction(original, reconstruction, cycle):
     fig = plt.figure(figsize=(10, 4))
     plt.plot(original[cycle], color='blue', label='Original cycle')
     plt.plot(reconstruction[cycle], color='red', label='Reconstructed cycle')
-    plt.title('Reconstructed cycle over original using LSTM-AE')
+    plt.title('Reconstructed cycle over original')
     plt.legend()
     plt.show()
 

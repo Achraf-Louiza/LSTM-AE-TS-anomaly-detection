@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 from tqdm import tqdm
 
 class DataProcessor:
@@ -28,7 +28,7 @@ class DataProcessor:
         Scales the training and testing data using StandardScaler.
         """
         # Create a new StandardScaler object
-        self.scaler = StandardScaler()
+        self.scaler = MinMaxScaler()
         
         # Fit the scaler to the training data using the specified column names
         self.scaler.fit(self.x_train[self.col_names])
