@@ -7,7 +7,7 @@ Auto-encoders are neural networks that aim to reconstruct their input data, whic
 In this project, I have utilized three different types of auto-encoder architectures, each with their own unique approach to data analysis:
 - **LSTM-AE with overlapped windowing**: Used to analyze time-series data with overlapping windows, providing a more accurate representation of the underlying patterns.
 - **LSTM-AE directly on the multivariate cycles**: Provides a more comprehensive understanding of the data in terms of cycles.
-- **Deep convolutional auto-encode*r: Used to learn features directly from raw data using convolutional layers, providing a more efficient and accurate way of encoding the data.  
+- **Deep convolutional auto-encoder**: Used to learn features directly from raw data using convolutional layers, providing a more efficient and accurate way of encoding the data.  
   
 Each of these architecture have been applied on an independent jupyter notebook with good results for LSTM applied directly on multivariate cycles while having almost perfect results with convolutions. (See metrics below)
 
